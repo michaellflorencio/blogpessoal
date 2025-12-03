@@ -1,4 +1,4 @@
-import { All, Controller, Get, HttpCode, HttpStatus } from "@nestjs/common";
+import { All, Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe } from "@nestjs/common";
 import { PostagemService } from "../services/postagem.service";
 import { Postagem } from "../entities/postagem.entity";
 import { get } from "http";
@@ -13,4 +13,10 @@ export class PostagemController{
         return this.postagemService.findAll()
     }
 
+    @Get("/:id_post")
+    @HttpCode(HttpStatus.OK) // monta a resposta http para front com status 200
+    findById(@Param("id_post",ParseIntPipe) id_post: number): Promise<Postagem>{
+        return this.postagemService.findById(id_post)
+
+    }
 }
